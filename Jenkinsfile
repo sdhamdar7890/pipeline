@@ -5,7 +5,6 @@ pipeline {
             agent any 
             steps {
                 echo 'Hello, Maven'
-                sh 'mvn --version'
             }
         }
         stage('Example Test') {
