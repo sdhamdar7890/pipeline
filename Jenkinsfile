@@ -1,24 +1,19 @@
-﻿pipeline {
-    agent any
+pipeline {
+    agent none 
     stages {
-        stage('Send Email') {
+        stage('Example Build') {
+            agent { docker 'maven:3.9.3-eclipse-temurin-17' } 
             steps {
-        
-                echo 'Send Email'
+                echo 'Hello, Maven'
+                sh 'mvn --version'
             }
         }
-    }
-    post {
-        always { 
-            echo 'I will always say Hello!'
-        }
-        aborted {
-            echo 'I was aborted'
-        }
-        failure {
-            mail to: 'sdhamdar9008@gmail.com',
-            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-            body: "Something is wrong with ${env.BUILD_URL}"
+        stage('Example Test') {
+            agent { docker 'openjdk:17-jre' } 
+            steps {
+                echo 'Hello, JDK'
+                sh 'java -version'
+            }
         }
     }
 }
